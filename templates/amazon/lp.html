@@ -1,0 +1,77 @@
+{% extends "amazon/base.html" %}
+{% block content %}
+{% load static %}
+    <link href="{% static 'plugins/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plugins/owlcarousel/assets/owl.theme.default.css' %}" rel="stylesheet">
+    <script src="{% static 'plugins/owlcarousel/owl.carousel.min.js' %}"></script>
+  
+    <section class="section-main bg padding-top-sm">
+        <div class="container">
+            <div class="row-sm">
+                <div class="col-md-8">
+                    <div class="owl-init slider-main owl-carousel" data-items="1" data-dots="false" data-nav="true">
+                        {% for item in items %}
+                        <div class="item-slide">
+                            <img src="{{ item.thumbnail.url }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div> <!-- col.// -->
+                <aside class="col-md-4">
+                    <div class="card mb-3">
+                        <figure class="itemside">
+                            <div class="aside"><div class="img-wrap p-2 border-right"><img class="img-sm" src="{% static 'images/items/1.jpg' %}"></div></div>
+                            <figcaption class="text-wrap align-self-center">
+                                <h6 class="title">Group of products is here </h6>
+                                <a href="#">More items</a>
+                            </figcaption>
+                        </figure>
+                    </div> <!-- card.// -->
+                    <div class="card mb-3">
+                        <figure class="itemside">
+                            <div class="aside"><div class="img-wrap p-2 border-right"><img class="img-sm" src="{% static 'images/items/2.jpg' %}"></div></div>
+                            <figcaption class="text-wrap align-self-center">
+                                <h6 class="title">Group of products  is here </h6>
+                                <a href="#">More items</a>
+                            </figcaption>
+                        </figure>
+                    </div> <!-- card.// -->
+                    
+                    <div class="card">
+                        <figure class="itemside">
+                            <div class="aside"><div class="img-wrap p-2 border-right"><img class="img-sm" src="{% static 'images/items/3.jpg' %}"></div></div>
+                            <figcaption class="text-wrap align-self-center">
+                                <h6 class="title">Group of products is here </h6>
+                                <a href="#">More items</a>
+                            </figcaption>
+                        </figure>
+                    </div> <!-- card.// -->
+                </aside>
+            </div>
+        </div> <!-- container .//  -->
+    </section>
+    <section class="section-content padding-y bg">
+        <div class="container">
+        
+            <div class="card">
+                <div class="card-body">
+            
+                    <header class="section-heading">
+                        <h3 class="title-section">Django Amazon</h3>
+                    </header>
+                    
+                    <article>
+                        <p>
+                            この教材ではDjangoを用いてAmazonに代表されるECサイトを作成します。Djangoが提供する多くの機能の中でも、主にCBV（クラスベースビュー）を
+                            積極的に用いて、書くコードの量をなるべく減らすような設計にしております。Djangoを利用すると言っても同じ機能を実現させるさせるために様々な手段がありますので、
+                            この教材が紹介しているやり方が正解だとは思わず、選択肢の一つとして受け入れていただければと思います。
+                            人のやり方やコードをうまく取り入れる（パクる）ことが、実務をこなせるレベルになる最短ルートだと私は考えておりますので、
+                            是非ここで学んだ実装方法を積極的に活用いただけると嬉しいです。
+                        </p> 
+                    </article>
+                </div>
+            </div>
+        
+        </div> <!-- container .//  -->
+    </section>
+{% endblock %}

@@ -1,0 +1,207 @@
+{% extends "amazon/base.html" %}
+{% block content %}
+{% load static %}
+
+<script src="{% static 'js/rater.js' %}" type="text/javascript"></script>
+
+<main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+        <div class="row wow fadeIn">
+            <div class="col-md-6 mb-4">
+                <img src="{{ object.thumbnail.url }}" class="img-fluid" alt="">
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="p-4">
+                    <div class="mb-3">
+                        <a href="">
+                        <span class="badge purple mr-1">Category 2</span>
+                        </a>
+                        <a href="">
+                        <span class="badge blue mr-1">New</span>
+                        </a>
+                        <a href="">
+                        <span class="badge red mr-1">Bestseller</span>
+                        </a>
+                    </div>
+                    <p class="lead">
+                        <h2>{{ object.name }}</h2>
+                        <span>¥{{ object.price }}</span>
+                    </p>
+                    <p>
+                        <span>
+                            {% if object.avg_rating > 0 %}
+                            <span>★</i></span>
+                            {% else %}
+                            <span>☆</span>
+                            {% endif %}
+                            {% if object.avg_rating > 1 %}
+                            <span>★</i></span>
+                            {% else %}
+                            <span>☆</span>
+                            {% endif %}
+                            {% if object.avg_rating > 2 %}
+                            <span>★</i></span>
+                            {% else %}
+                            <span>☆</span>
+                            {% endif %}
+                            {% if object.avg_rating > 3 %}
+                            <span>★</i></span>
+                            {% else %}
+                            <span>☆</span>
+                            {% endif %}
+                            {% if object.avg_rating > 4 %}
+                            <span>★</i></span>
+                            {% else %}
+                            <span>☆</span>
+                            {% endif %}
+                        </span>
+                    </p>
+
+                    <p class="lead font-weight-bold">商品説明</p>
+                    <p>{{ object.description }}</p>
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'amazon:cart' user.cart.pk %}" class="d-flex justify-content-left">
+                        {% csrf_token %}
+                        <!-- Default input -->
+                        <input name="product_pk" type="hidden" value="{{ object.pk }}">
+                        <input name="amount" type="number" value="1" aria-label="Search" class="form-control" style="width: 100px; margin-right: 1rem">
+                        <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
+                        <i class="fas fa-shopping-cart ml-1"></i>
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% if user.is_authenticated %}
+        <form action="" method="POST">
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                    {% if field.name == 'rating' %}
+                    <div class="rating"></div>
+                    {% endif %}
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">投稿</button>
+        </form> 
+        {% endif %}
+        {% if object.reviews.all %}
+        <div class="container">
+            <h2 class="text-center">レビュー</h2>
+
+            {% for review in object.reviews.all %}      
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="icon-wrap icon-md bg2 round text-secondary text-center">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <div class="pull-left">
+                                    <small>{{ review.user.name }}</small>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <strong>{{ review.title }}</strong>
+                                <p class="float-right">
+                                    {% if review.rating > 0 %}
+                                    <span>★</i></span>
+                                    {% else %}
+                                    <span>☆</span>
+                                    {% endif %}
+                                    {% if review.rating > 1 %}
+                                    <span>★</i></span>
+                                    {% else %}
+                                    <span>☆</span>
+                                    {% endif %}
+                                    {% if review.rating > 2 %}
+                                    <span>★</i></span>
+                                    {% else %}
+                                    <span>☆</span>
+                                    {% endif %}
+                                    {% if review.rating > 3 %}
+                                    <span>★</i></span>
+                                    {% else %}
+                                    <span>☆</span>
+                                    {% endif %}
+                                    {% if review.rating > 4 %}
+                                    <span>★</i></span>
+                                    {% else %}
+                                    <span>☆</span>
+                                    {% endif %}
+                                </p>
+                                <div class="clearfix"></div>
+                                <p>{{ review.comment }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>レビュはありません</p>
+        {% endif %}
+        <hr>
+
+        <div class="row d-flex justify-content-center wow fadeIn">
+
+            <div class="col-md-6 text-center">
+
+                <h4 class="my-4 h4">Additional information</h4>
+
+                <p>
+                    Djangoのようなフレームワークを利用しても、ページのデザインを綺麗にすることはできません。
+                    恐らくこの教材で学習している方のほとんどがどちらかというとサーバサイドを勉強している方が多いのかと思慮しますので、
+                    htmlやcssの部分はあまり得意でないという方が多いと思います。そのような方はぜひBootstrap等のCSSフレームワークを利用することをお勧めします。
+                    また、コードのスニペットをネット上から拝借するのも非常に良いと思います。日本の
+                    サイトですとまだこのスニペットのまとめサイトのようなものは少ないですが、海外ですと無数に存在するので、ぜひそれらを活用していただくことをお勧めします。(無料で公開されていることろが多いです)
+                    特にログイン画面やサインアップ部分は「bootstrap login snippet」等で検索するといろいろな方が作成したスニペットが出てくるので、是非今後「自分でサービス開発したい！」となった際にご参考にしていただければと思います。
+                </p>
+            </div>
+        </div>
+        <div class="row wow fadeIn">
+            <div class="col-lg-4 col-md-12 mb-4">
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+
+            </div>
+        </div>
+    </div>
+</main>   
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(function() {
+        var options = {
+            max_value: 5,
+            step_size: 1,
+            initial_value: 0,
+            selected_symbol_type: 'utf8_star', // Must be a key from symbols
+            cursor: 'default',
+            readonly: false,
+            change_once: false, // Determines if the rating can only be set once
+        }
+
+        var $rating = $(".rating");
+        var $rating_input = $('#id_rating');
+
+        $rating.rate(options);
+        $rating.on('change', function() {
+            $rating_input.val(parseInt($(this).rate('getValue')));
+        });
+    });
+</script>
+{% endblock %}

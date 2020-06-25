@@ -1,0 +1,21 @@
+{% extends "amazon/base.html" %}
+{% block content %}
+{% load static %}
+    <div class="row-sm">
+    {% for object in object_list %}
+        
+        <div class="col-md-3">
+            <figure class="card card-product">
+                <div class="img-wrap"> <img src="{{ object.thumbnail.url }}"></div>
+                    <figcaption class="info-wrap">
+                        <h6 class="title "><a href='{% url 'amazon:item_detail' object.pk %}'>{{ object.name }}</a></h6>                        
+                        <div class="price-wrap">
+                            <span class="price-new">{{ object.price }}円</span>
+                        </div> <!-- price-wrap.// -->
+                </figcaption>
+            </figure> <!-- card // -->
+        </div> <!-- col // -->
+        
+    {% endfor %}
+    </div>
+{% endblock %}
